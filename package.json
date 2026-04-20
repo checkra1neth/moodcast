@@ -1,0 +1,28 @@
+{
+  "name": "moodcast",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "keywords": [
+    "elevenlabs",
+    "tts",
+    "music",
+    "sound-effects",
+    "mood",
+    "audio"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "AI-powered personalized audio stories based on your mood — using ElevenLabs TTS, Music & Sound Effects",
+  "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.43.0",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "fast-check": "^4.7.0"
+  }
+}

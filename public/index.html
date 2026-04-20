@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MoodCast — AI Audio Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#131313" />
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-gradient" id="bg-gradient"></div>
+
+  <div id="app">
+    <!-- ═══ SCREEN 1: Home ═══ -->
+    <section id="mood-select" class="screen active">
+
+      <!-- Top bar -->
+      <header class="top-bar">
+        <span class="logo-text">MoodCast</span>
+        <div class="top-bar-right">
+          <button class="top-icon-btn" aria-label="Settings">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+          <button class="top-icon-btn" aria-label="Profile">
+            <span class="material-symbols-outlined">account_circle</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <div class="hero-compact">
+        <h1>How do you<br/>want to feel?</h1>
+      </div>
+
+      <!-- Mood pills -->
+      <div class="mood-row">
+        <button class="mood-pill" data-mood="relax" aria-label="Relax mood">
+          <span class="material-symbols-outlined pill-icon">spa</span>
+          <span class="pill-label">Relax</span>
+        </button>
+        <button class="mood-pill" data-mood="focus" aria-label="Focus mood">
+          <span class="material-symbols-outlined pill-icon">center_focus_strong</span>
+          <span class="pill-label">Focus</span>
+        </button>
+        <button class="mood-pill" data-mood="energy" aria-label="Energy mood">
+          <span class="material-symbols-outlined pill-icon">bolt</span>
+          <span class="pill-label">Energy</span>
+        </button>
+        <button class="mood-pill" data-mood="sleep" aria-label="Sleep mood">
+          <span class="material-symbols-outlined pill-icon">bedtime</span>
+          <span class="pill-label">Sleep</span>
+        </button>
+      </div>
+
+      <!-- Config panel -->
+      <div class="config-panel hidden" id="config-panel">
+
+        <!-- Tab bar (glass pill) — Story / Voice / Duration -->
+        <div class="cfg-tabs glass-toggle">
+          <button class="cfg-tab active" data-tab="story" aria-label="Story mode">
+            <span class="material-symbols-outlined" style="font-size:18px">edit_note</span>
+            <span>Story</span>
+          </button>
+          <button class="cfg-tab" data-tab="voice" aria-label="Voice">
+            <span class="material-symbols-outlined" style="font-size:18px">mic</span>
+            <span>Voice</span>
+          </button>
+          <button class="cfg-tab" data-tab="duration" aria-label="Duration">
+            <span class="material-symbols-outlined" style="font-size:18px">timer</span>
+            <span>Duration</span>
+          </button>
+        </div>
+
+        <!-- Tab: Story (mode toggle + prompt) -->
+        <div class="cfg-content active" id="tab-story">
+          <div class="mode-selector">
+            <div class="glass-toggle">
+              <div class="mode-toggle" data-active="random">
+                <button class="mode-btn" data-mode="custom" aria-label="Custom Prompt mode">Custom</button>
+                <button class="mode-btn active" data-mode="random" aria-label="Random Story mode">Random</button>
+                <div class="mode-slider"></div>
+              </div>
+            </div>
+          </div>
+          <div class="prompt-input-wrap hidden" id="prompt-input-wrap">
+            <textarea id="prompt-input" class="prompt-input"
+              placeholder="a walk through rainy Tokyo at night…"
+              maxlength="200" rows="2" aria-label="Describe your scene"></textarea>
+            <span class="char-counter" id="char-counter">200</span>
+          </div>
+        </div>
+
+        <!-- Tab: Voice -->
+        <div class="cfg-content" id="tab-voice">
+          <div class="voice-card">
+            <div class="voice-options" id="voice-options"></div>
+          </div>
+        </div>
+
+        <!-- Tab: Duration -->
+        <div class="cfg-content" id="tab-duration">
+          <div class="duration-card">
+            <div class="dur-row">
+              <button class="chip" data-dur="short"><span class="chip-main">~20s</span></button>
+              <button class="chip active" data-dur="medium"><span class="chip-main">~35s</span></button>
+              <button class="chip" data-dur="long"><span class="chip-main">~1m</span></button>
+              <button class="chip chip-icon" data-dur="custom">
+                <span class="material-symbols-outlined" style="font-size:16px">timer</span>
+              </button>
+            </div>
+            <div class="custom-duration hidden" id="custom-duration">
+              <span class="custom-dur-value" id="custom-dur-value">2:00</span>
+              <input type="range" id="custom-dur-slider" min="15" max="600" value="120" step="5" class="custom-dur-range" />
+              <div class="custom-dur-labels"><span>15s</span><span>10 min</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-wrap">
+          <button class="go-btn" id="btn-go">
+            <span class="go-glow"></span>
+            <span class="go-inner">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:20px">auto_awesome</span>
+              Create experience
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <p class="footer-note">Powered by ElevenLabs AI</p>
+    </section>
+
+    <!-- ═══ SCREEN 2: Generating ═══ -->
+    <section id="loading" class="screen">
+      <div class="gen-container">
+        <div class="gen-ring">
+          <svg class="ring-svg" viewBox="0 0 120 120">
+            <circle class="ring-track" cx="60" cy="60" r="54"/>
+            <circle class="ring-progress" cx="60" cy="60" r="54" id="ring-progress"/>
+          </svg>
+          <span class="gen-emoji" id="gen-emoji"></span>
+        </div>
+        <h2 class="gen-title">Creating your <span id="gen-mood-name"></span></h2>
+        <p class="gen-sub" id="gen-sub">Four AI layers generating in parallel</p>
+        <div class="gen-steps">
+          <div class="gen-step hidden" id="step-enhance">
+            <div class="step-icon-circle">
+              <span class="material-symbols-outlined">auto_awesome</span>
+            </div>
+            <div class="step-info">
+              <span class="step-badge">In progress</span>
+              <span class="step-label">Enhancing prompt</span>
+            </div>
+            <div class="step-status"><span class="step-spinner"></span></div>
+          </div>
+          <div class="gen-step" id="step-voice">
+            <div class="step-icon-circle">
+              <span class="material-symbols-outlined">record_voice_over</span>
+            </div>
+            <div class="step-info">
+              <span class="step-badge">In progress</span>
+              <span class="step-label">Narrating story</span>
+            </div>
+            <div class="step-status"><span class="step-spinner"></span></div>
+          </div>
+          <div class="gen-step" id="step-music">
+            <div class="step-icon-circle">
+              <span class="material-symbols-outlined">music_note</span>
+            </div>
+            <div class="step-info">
+              <span class="step-badge">In progress</span>
+              <span class="step-label">Composing music</span>
+            </div>
+            <div class="step-status"><span class="step-spinner"></span></div>
+          </div>
+          <div class="gen-step" id="step-cues">
+            <div class="step-icon-circle">
+              <span class="material-symbols-outlined">movie</span>
+            </div>
+            <div class="step-info">
+              <span class="step-badge">In progress</span>
+              <span class="step-label">Sound effects</span>
+            </div>
+            <div class="step-status"><span class="step-spinner"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SCREEN 3: Player ═══ -->
+    <section id="player" class="screen">
+      <div class="player-wrap">
+        <button class="back-btn" id="btn-back" aria-label="Back to mood selection">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <div class="art-area">
+          <canvas id="visualizer" width="400" height="400"></canvas>
+          <span class="art-emoji" id="player-emoji"></span>
+        </div>
+        <div class="track-info">
+          <h2 class="track-title" id="player-title"></h2>
+          <button class="story-toggle" id="story-toggle" aria-label="Show story text">
+            <span class="material-symbols-outlined" style="font-size:14px">subject</span>
+            Story
+          </button>
+        </div>
+        <div class="story-card collapsed" id="story-card">
+          <p class="story-body" id="story-body"></p>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+          <div class="progress-times"><span id="time-current">0:00</span><span id="time-total">0:00</span></div>
+        </div>
+        <div class="transport">
+          <button class="ctrl-btn" id="btn-loop" aria-label="Toggle loop">
+            <span class="material-symbols-outlined">repeat</span>
+          </button>
+          <button class="play-btn" id="btn-play" aria-label="Play">
+            <span class="material-symbols-outlined" id="icon-play" style="font-variation-settings:'FILL' 1;font-size:28px">play_arrow</span>
+            <span class="material-symbols-outlined" id="icon-pause" style="font-variation-settings:'FILL' 1;font-size:28px;display:none">pause</span>
+          </button>
+          <button class="ctrl-btn" id="btn-new" aria-label="Generate another">
+            <span class="material-symbols-outlined">refresh</span>
+          </button>
+        </div>
+        <div class="mixer-pill glass-panel">
+          <div class="mix-row">
+            <span class="mix-icon"><span class="material-symbols-outlined">mic</span></span>
+            <span class="mix-label">Voice</span>
+            <input type="range" id="vol-voice" min="0" max="1" step="0.05" value="1" class="mix-slider" />
+          </div>
+          <div class="mix-row">
+            <span class="mix-icon"><span class="material-symbols-outlined">music_note</span></span>
+            <span class="mix-label">Music</span>
+            <input type="range" id="vol-music" min="0" max="1" step="0.05" value="0.3" class="mix-slider" />
+          </div>
+          <div class="mix-row">
+            <span class="mix-icon"><span class="material-symbols-outlined">movie</span></span>
+            <span class="mix-label">SFX</span>
+            <input type="range" id="vol-sfx" min="0" max="1" step="0.05" value="0.7" class="mix-slider" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
