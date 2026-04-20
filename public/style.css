@@ -102,13 +102,10 @@ body {
 .top-icon-btn {
   width: 36px; height: 36px; border-radius: 50%;
   background: transparent; border: none;
-  color: rgba(255,255,255,0.2); cursor: pointer;
+  color: rgba(255,255,255,0.1); cursor: default;
   display: flex; align-items: center; justify-content: center;
   transition: all .25s;
-}
-.top-icon-btn:hover {
-  color: rgba(110,229,145,0.6);
-  background: rgba(110,229,145,0.06);
+  opacity: 0.3; pointer-events: none;
 }
 .top-icon-btn .material-symbols-outlined { font-size: 20px; }
 

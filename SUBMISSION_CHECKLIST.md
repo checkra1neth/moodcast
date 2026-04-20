@@ -1,12 +1,12 @@
 # 🏆 MoodCast — Submission Checklist
 
 ## Code & Repo
-- [ ] `.env` в `.gitignore` (ключи не утекут)
-- [ ] `.env.example` с плейсхолдерами
-- [ ] README с описанием, скриншотом, инструкцией запуска
+- [x] `.env` в `.gitignore` (ключи не утекут)
+- [x] `.env.example` с плейсхолдерами
+- [x] README с описанием, скриншотом, инструкцией запуска
 - [ ] Убрать мёртвые кнопки (Settings/Profile) или добавить `cursor: default; opacity: 0.3`
 - [ ] Проверить что `npm install && npm start` работает с нуля
-- [ ] Залить на GitHub, сделать repo public
+- [x] Залить на GitHub, сделать repo public
 
 ## Видео (60-90 сек) — САМОЕ ВАЖНОЕ
 - [ ] **Hook (0-5s)**: показать финальный результат — play с голосом + музыкой + SFX
@@ -22,11 +22,11 @@
 - [ ] Длительность < 90 секунд
 
 ## Submission Form
-- [ ] **Description** (3 пункта, можно скопировать):
+- [x] **Description** (3 пункта, можно скопировать):
   1. "MoodCast generates personalized cinematic audio stories based on your mood — with AI voice narration, original music, and timed sound effects"
   2. "Uses 4 ElevenLabs APIs: TTS v3 with Audio Tags for emotional delivery, Music API for scene-matched soundtracks, Sound Effects for cinematic cues, and Conversational AI for story generation"
   3. "First app to layer all 4 ElevenLabs APIs into one real-time cinematic audio experience with parallel generation and live mixing"
-- [ ] Repo link (public GitHub)
+- [x] Repo link (public GitHub)
 - [ ] Live demo URL (если задеплоишь) или видео
 - [ ] Cover image — скриншот player screen с визуализатором
 
