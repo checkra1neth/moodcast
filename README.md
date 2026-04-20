@@ -4,6 +4,10 @@
 
 ![MoodCast](https://img.shields.io/badge/ElevenLabs-Hackathon-6ee591?style=for-the-badge) ![Node.js](https://img.shields.io/badge/Node.js-22+-339933?style=for-the-badge&logo=node.js&logoColor=white)
 
+## Demo
+
+https://github.com/checkra1neth/moodcast/raw/main/demo-vertical.mp4
+
 ## The Problem
 
 You want to relax, focus, get energized, or fall asleep — but finding the right audio content means scrolling through endless playlists, podcasts, and apps. Nothing is personalized. Nothing combines voice, music, and atmosphere into one seamless experience.
