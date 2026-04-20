@@ -19,10 +19,6 @@ MoodCast generates **personalized cinematic audio stories** on demand. Choose a 
 
 All four layers generate **in parallel** and play together with a real-time mixer.
 
-## Demo
-
-https://github.com/user-attachments/assets/PLACEHOLDER
-
 ## How It Works
 
 ```
