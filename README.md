@@ -6,7 +6,7 @@
 
 ## Demo
 
-https://github.com/checkra1neth/moodcast/raw/main/demo.mp4
+<video src="https://github.com/checkra1neth/moodcast/raw/main/demo.mp4" width="100%" autoplay muted loop></video>
 
 ## The Problem
 
