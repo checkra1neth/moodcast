@@ -6,7 +6,7 @@
 
 ## Demo
 
-https://github.com/checkra1neth/moodcast/raw/main/demo-vertical.mp4
+https://github.com/checkra1neth/moodcast/raw/main/demo.mp4
 
 ## The Problem
 
