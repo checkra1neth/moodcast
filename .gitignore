@@ -3,6 +3,4 @@ public/audio/*.mp3
 output.mp3
 .env
 .playwright-mcp/
-.agents/
-.kiro/
 .vscode/

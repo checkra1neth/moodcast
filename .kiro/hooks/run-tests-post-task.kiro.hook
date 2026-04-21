@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Run Tests After Task",
+  "description": "Automatically runs property-based tests after each spec task is completed to ensure correctness properties are preserved",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "node --test tests/preservation.test.mjs",
+    "timeout": 30
+  }
+}

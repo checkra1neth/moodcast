@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Validate Environment on Server Edit",
+  "description": "Checks that .env file exists and contains ELEVENLABS_API_KEY when server files are modified",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "server.mjs",
+      "enhance.mjs",
+      "moods.mjs",
+      "stories.mjs"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "test -f .env && grep -q 'ELEVENLABS_API_KEY' .env && echo '✅ Environment OK' || echo '⚠️ Missing .env or ELEVENLABS_API_KEY'",
+    "timeout": 5
+  }
+}
